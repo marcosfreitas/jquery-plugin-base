@@ -9,15 +9,15 @@ The internal functions only accepts arguments if they be a Array or a Array-like
 The instance: 
 > $.MyPLugin('do_not_exists', {'name':'marcos freitas'});
 
-the 'init' method will be called when a method or event not found and will try print the params:
-The output: 
-> undefined
+the 'init' method will be called when a method or event not found and will try print the params. Now this will output **'undefined'**
 
+The instance: 
 > $.MyPlugin('init', {'0':'marcos', '1':'freitas', length:2});
 
-will call the 'init' method and they will output the 2 first params. This only works because this argument is a array-like object.
+will call the 'init' method and they **will output the 2 first params**. *This only works because this argument is a array-like object*.
 
+The instance: 
 > $.MyPlugin('b', Array('jesus', 'cristo')); 
 
-will found the method 'b' and output only 'jesus' because the scope of 'b' function declares only 1 parameter.
+will found the method 'b' and **output only 'jesus' because the scope of 'b' function declares only 1 parameter**.
 
