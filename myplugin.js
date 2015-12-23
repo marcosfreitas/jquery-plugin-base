@@ -45,7 +45,7 @@
 		};
 
 		
-		if (opcoes !== undefined && opcoes !== 'undefined') {
+		if (typeof opcoes !== 'undefined') {
 
 	    	try{
 				// Array.prototype.slice não funciona até o IE 8 e no chrome 14
@@ -82,7 +82,7 @@
 	    	return metodos.init.apply( this, opcoes );
 	    }
 	    // chama o método init passando o objeto jquery seletor
-	    else if ( !opcoes ) {
+	    else if ( typeof nome_funcao === 'undefined' && typeof opcoes === 'undefined' ) {
 	    	return metodos.init();
 	    	// somente se a função do plugin for do do tipo $.fn 
 	    	// return metodos.init(this);
