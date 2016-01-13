@@ -9,19 +9,20 @@
 ;(function($) {
 	'use strict'; // ecma script 5
 
-	$.MyPlugin = function (nome_funcao, opcoes) {
+	// the __function is a method or event's name
+	$.fn.MyPlugin = function (__function, options) {
 
-		// objetos padrões
-		var padrao = {
-			'nome' : 'marcos',
-			'sobrenome' : 'freitas',
-			'idade' : 25
+		// default properties
+		var __default = {
+			'name' : 'marcos',
+			'lastname' : 'freitas',
+			'yearold' : 25
 		},
 
-		// mesclando opções aos valores padrão
-		config = $.extend({}, padrao, opcoes),
+		// merging new properties to default
+		config = $.extend({}, __default, options),
 
-		metodos = {
+		methods = {
 
 			init : function (param, param2) {
 				console.info(param);
@@ -38,16 +39,19 @@
 
 		},
 
-		eventos = {
+		events = {
 			d : function (param) {
 				console.log('--' + param)
-			}
+			},
+			onClick: function() {},
+			onHover: function() {},
+			onLoad: function() {}
 		};
 
 	   // call the methods or events
-	   var array_argumentos = Array();
+	   var arr_options = Array();
 
-	    if (typeof opcoes !== 'undefined') {
+	    if (typeof options !== 'undefined') {
 	    	try {
 			// Array.prototype.slice não funciona até o IE 8 e no chrome 14
 		        // http://stackoverflow.com/questions/7056925/how-does-array-prototype-slice-call-work
@@ -55,40 +59,38 @@
 		        // para passar corretamente parâmetros para os métodos ou funçõesé preciso que opções seja um array,
 		        // ou um array-like (um objeto com índices numéricos e uma propriedade 'length')
 		        // repassa todos os elementos do array, mas depende de quantos a função está esperando receber
-		        array_argumentos = Array.prototype.slice.call(opcoes, 0);
+		        arr_options = Array.prototype.slice.call(opcoes, 0);
 		} catch(err){
-
-		        // lento mas funciona no IE
-		            array_argumentos = [];
-		        var length = opcoes.length;
-
+		        // slow but works on IE
+		            arr_options = [];
+		        var length = options.length;
 		        for(var o=0; o < length; o++){
-		            array_argumentos.push(opcoes[o]);
+		            arr_options.push(options[o]);
 		        }
 		    }
 	    }
 
-	    // as funções dos objetos de métodos e eventos podem ser retornadas com metodo['nome_metodo'] por exemplo
-	    if ( metodos[nome_funcao] ) {
-		// O método apply() chama uma função com um dado valor this e arguments providos como array (ou um objeto array-like ).
-		return metodos[nome_funcao].apply( this, array_argumentos);
+	    // the functions at methods and events can be "returned" calling methods['onload'] by example
+	    if ( methods[__function] ) {
+		// the apply() method call the function with a value (this) and arguments provided like an array (or a object "array-like").
+		return methods[__function].apply( this, arr_options);
 	    }
-	    else if ( eventos[nome_funcao] ) {
-	    	return eventos[nome_funcao].apply( this, array_argumentos);
+	    else if ( events[__function] ) {
+	    	return events[__function].apply( this, arr_options);
 	    }
-	    // não achou nenhum método e evento com o nome daquela função
-	    // chama o método init passando opcoes se for um objeto
-	    else if ( typeof opcoes === 'object' ) {
-	    	return metodos.init.apply( this, opcoes );
+	    // don't found anything, method or event, with that name (__func)
+	    // so call the init method passing the options if this is a object
+	    else if ( typeof options === 'object' ) {
+	    	return methods.init.apply( this, options );
 	    }
-	    // chama o método init passando o objeto jquery seletor ou não
-	    else if ( typeof nome_funcao === 'undefined' && typeof opcoes === 'undefined' ) {
-	    	return metodos.init();
-	    	// somente se a função do plugin for do do tipo $.fn 
-	    	// return metodos.init(this);
+	    // finaly call the method init passing the selector object jquery or not
+	    else if ( typeof __function === 'undefined' && typeof options === 'undefined' ) {
+	    	 // if only the plugin is for the type $.fn 
+	    	 return methods.init(this);
+	    	 //return methods.init();
 	    }
 	    else {
-	    	$.error( 'O Metodo ou Evento "' +  nome_funcao + '" nao existe em log.min.js' );
+	    	$.error( 'The method or event "' +  nome_funcao + '" don not exists on MyPLugin.js' );
 	    }
 
 	};
