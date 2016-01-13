@@ -7,7 +7,7 @@ The internal functions only accepts arguments if they be a Array or a Array-like
 ## Examples
 
 The instance: 
-> $.MyPLugin('do_not_exists', {'name':'marcos freitas'});
+> $.MyPlugin('do_not_exists', {'name':'marcos freitas'});
 
 the 'init' method will be called when a method or event not found and will try print the params. Now this will output **'undefined'**
 
@@ -17,7 +17,7 @@ The instance:
 will call the 'init' method and they **will output the 2 first params**. *This only works because this argument is a array-like object*.
 
 The instance: 
-> $.MyPlugin('b', Array('jesus', 'cristo')); 
+> $.MyPlugin('fake', ['http://demo3607536.mockable.io/test', 'other param']);
 
-will found the method 'b' and **output only 'jesus' because the scope of 'b' function declares only 1 parameter**.
+will found the method 'fake'... **see your browser console**.
 
