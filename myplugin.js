@@ -101,10 +101,13 @@
 
 		methods = {
 
-			init : function (url, param2) {
+			init : function (url) {
 				methods.fake(url);				
 			},
 
+			b : function (param, param2) {
+				console.log(param, param2);
+			},
 
 			/*! a example for a method what do a request to a api */
 			fake : function(url) {
@@ -112,7 +115,7 @@
 				if (typeof url === 'undefined') {
 					url = 'http://www.mocky.io/v2/56969c1125000012061affbb';
 				}
-				
+
 				var _fake = privates.get(url);
 
 				// Promises running after _fake respond
