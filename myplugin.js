@@ -101,7 +101,7 @@
 
 		methods = {
 
-			init : function (param) {
+			init : function (param, param2) {
 				console.log(param);			
 			},
 
