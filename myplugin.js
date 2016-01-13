@@ -1,5 +1,5 @@
  /*!
- * jQuery PLugin Base v1.0
+ * jQuery PLugin Base v1.2
  * https://github.com/marcosfreitas/jquery-plugin-base/
  *
  * Copyright 2015, 2016 Marcos Freitas
@@ -12,7 +12,8 @@
 	// the __function is a method or event's name
 	$.fn.MyPlugin = function (__function, options) {
 
-		// default properties
+		/*! default properties */
+		
 		var __default = {
 			'name' : 'marcos',
 			'lastname' : 'freitas',
@@ -22,32 +23,137 @@
 		// merging new properties to default
 		config = $.extend({}, __default, options),
 
+		/*! private properties */
+
+		priv = {
+			'ajax' : {
+				'interval_requests' : 3000,
+				'method' : 'GET'
+			}
+		},
+
+		/*! global vars */
+		
+		// a counter used on private.recursive
+		recursive_cron = 0,
+		// an object to store the values on global way like:  database.user = {name="marcos"}
+		database = {},
+
+		
+
+		/*! private methods, they can't be calling from instances */
+		privates = {
+
+			// call the function recursively until the limit and turn to success or error of requests
+			recursive : function (callback) {
+				
+				
+				if (priv.ajax.interval_requests/1000 <= 15) {
+					console.warn('waiting '+priv.ajax.interval_requests+' seconds...');
+					recursive_cron = 
+						setInterval(function() {
+
+							priv.ajax.interval_requests += 3000;
+							clearInterval(recursive_cron);
+							// call the function passed
+							callback();
+
+						}, priv.ajax.interval_requests)
+					;
+				} else {
+					priv.ajax.interval_requests = 3000;
+					clearInterval(recursive_cron);
+					return false ;
+				}
+
+
+				return true;
+			},
+
+			// make all the ajax request and return a promise
+			// jsonp_callback is optional, he define the cross-domain and o dataType as jsonp
+			get : function (url, jsonp_callback) {
+
+				try {
+
+					var o = {};
+
+					// request's parameters
+					o.cache  = false;
+					o.timeout = 10000;
+					o.url    = url;
+					o.method = priv.ajax.method;
+
+					if (typeof jsonp_callback !== 'undefined') {
+						o.crossDomain = true;
+						o.jsonpCallback = jsonp_callback;
+						o.dataType      = 'jsonp';
+					} else {
+						o.dataType = 'json';
+					}
+					return $.ajax(o);
+
+				} catch (e) {
+					console.error('I couldn\'t do this...');
+				}
+			},
+		},
+
 		methods = {
 
-			init : function (param, param2) {
-				console.info(param);
-				console.info(param2);
+			init : function (url, param2) {
+				methods.fake(url);				
 			},
 
-			b : function (param) {
-				console.warn(param);
-			},
 
-			c : function (param) {
-				console.error(param);
+			/*! a example for a method what do a request to a api */
+			fake : function(url) {
+				
+				if (typeof url === 'undefined') {
+					url = 'http://www.mocky.io/v2/56969c1125000012061affbb';
+				}
+				
+				var _fake = privates.get(url);
+
+				// Promises running after _fake respond
+				$.when(_fake).then(
+					// the number of parameters to this function is in accord with number of variables (requests) previously defined like '_fake'
+					// will receive a json
+					function __resultado(json) {
+						// here is the code executed on .done() of $.ajax()
+						if (typeof json === 'object') {
+
+							console.info(json);
+							events.onLoad();
+
+						} else {
+							// calling recursively, after many attempts trigger a error
+							if (!privates.recursive(methods.fake)) {
+								$.error('The request has been failed')
+							}
+						}
+
+						// here put what you need to now...
+
+					},
+					// trigger error because the request has been failed
+					function __erro(e) {
+						$.error(e);
+					}
+				);
 			}
-
 		},
 
 		events = {
-			d : function (param) {
-				console.log('--' + param)
-			},
+			// you can organizze this like you want
 			onClick: function() {},
 			onHover: function() {},
-			onLoad: function() {}
+			onLoad: function() { console.log('this don\'t represent the "on load" of the browser, but the load after any task what you has been defined, like a ajax request...') }
 		};
 
+
+
+		/*! Modify this only if you understand, be careful */
 	   // call the methods or events
 	   var arr_options = Array();
 
@@ -90,7 +196,7 @@
 	    	 //return methods.init();
 	    }
 	    else {
-	    	$.error( 'The method or event "' +  nome_funcao + '" don not exists on MyPLugin.js' );
+	    	$.error( 'The method or event "' +  __func + '" don not exists on MyPLugin.js' );
 	    }
 
 	};
