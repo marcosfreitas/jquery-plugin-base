@@ -102,7 +102,7 @@
 		methods = {
 
 			init : function (param, param2) {
-				console.log(param);			
+				console.log(param, param2);			
 			},
 
 			b : function (param, param2) {
