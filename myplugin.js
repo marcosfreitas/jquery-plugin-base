@@ -101,8 +101,8 @@
 
 		methods = {
 
-			init : function (url) {
-				methods.fake(url);				
+			init : function (param) {
+				console.log(param);			
 			},
 
 			b : function (param, param2) {
