@@ -10,7 +10,7 @@
 	'use strict'; // ecma script 5
 
 	// the __function is a method or event's name
-	$.fn.MyPlugin = function (__function, options) {
+	$.MyPlugin = function (__function, options) {
 
 		/*! default properties */
 		
