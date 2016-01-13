@@ -17,7 +17,7 @@ The instance:
 will call the 'init' method and they **will output the 2 first params**. *This only works because this argument is a array-like object*.
 
 The instance: 
-> $.MyPlugin('fake', ['http://demo3607536.mockable.io/test', 'other param']);
+> $.MyPlugin('fake', ['http://www.mocky.io/v2/56969c1125000012061affbb', 'other param']);
 
 will found the method 'fake'... **see your browser console**.
 
