@@ -41,7 +41,7 @@
 
 		
 
-		/*! private methods, they can't be calling from instances */
+		/*! private methods, they can't be called from instances */
 		privates = {
 
 			// call the function recursively until the limit and turn to success or error of requests
