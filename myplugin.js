@@ -169,7 +169,7 @@
 		        // para passar corretamente parâmetros para os métodos ou funçõesé preciso que opções seja um array,
 		        // ou um array-like (um objeto com índices numéricos e uma propriedade 'length')
 		        // repassa todos os elementos do array, mas depende de quantos a função está esperando receber
-		        arr_options = Array.prototype.slice.call(opcoes, 0);
+		        arr_options = Array.prototype.slice.call(options, 0);
 		} catch(err){
 		        // slow but works on IE
 		            arr_options = [];
