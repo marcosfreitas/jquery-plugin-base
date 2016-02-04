@@ -128,7 +128,7 @@
 						if (typeof json === 'object') {
 
 							console.info(json);
-							events.onLoad();
+							events.onFinish();
 
 						} else {
 							// calling recursively, after many attempts trigger a error
@@ -152,7 +152,7 @@
 			// you can organizze this like you want
 			onClick: function() {},
 			onHover: function() {},
-			onLoad: function() { console.log('this don\'t represent the "on load" of the browser, but the load after any task what you has been defined, like a ajax request...') }
+			onFinish: function() { console.log('this don\'t represent the "on load" of the browser, but the load after any task what you has been defined, like a ajax request...') }
 		};
 
 
