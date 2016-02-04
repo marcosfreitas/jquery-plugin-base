@@ -122,7 +122,7 @@
 				$.when(_fake).then(
 					// the number of parameters to this function is in accord with number of variables (requests) previously defined like '_fake'
 					// will receive a json
-					function __resultado(json) {
+					function __response(json) {
 						// here is the code executed on .done() of $.ajax()
 						if (typeof json === 'object') {
 
@@ -140,7 +140,7 @@
 
 					},
 					// trigger error because the request has been failed
-					function __erro(e) {
+					function __error(e) {
 						$.error(e);
 					}
 				);
