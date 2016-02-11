@@ -202,7 +202,7 @@
 	    	 //return methods.init();
 	    }
 	    else {
-	    	$.error( 'The method or event "' +  __func + '" don not exists on MyPLugin.js' );
+	    	$.error( 'The method or event "' +  __function + '" don not exists on MyPLugin.js' );
 	    }
 
 	};
