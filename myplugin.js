@@ -190,10 +190,13 @@
 	    else if ( events[__function] ) {
 	    	return events[__function].apply( this, arr_options);
 	    }
-	    // don't found anything, method or event, with that name (__func)
-	    // so call the init method passing the options if this is a object
-	    else if ( typeof options === 'object' || typeof __function === 'object' ) {
-	    	return methods.init.apply( this, options );
+	    // don't found anything, method or event, with that name (__function)
+	    // so call the init method, the parameters are into global object '__default'
+	    else if ( typeof __function === 'object' || typeof options === 'object' ) {
+
+    		__default = $.extend({}, options, __function);
+
+	    	return methods.init();
 	    }
 	    // finaly call the method init passing the selector object jquery or not
 	    else if ( typeof __function === 'undefined' && typeof options === 'undefined' ) {
