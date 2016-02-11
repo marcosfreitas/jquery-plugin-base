@@ -25,7 +25,7 @@
 
 		/*! private properties */
 		
-		// if you have requests to an Restful API, you can change the 'verb' of the priv.method to POST, PUT, DELETE or UPDATE.
+		// if you have requests to an Restful API, you can change the 'verb' of the priv.ajax.method to POST, PUT, DELETE or UPDATE.
 		priv = {
 			'ajax' : {
 				'interval_requests' : 3000,
