@@ -26,9 +26,11 @@
 		/*! private properties */
 		
 		// if you have requests to an Restful API, you can change the 'verb' of the priv.ajax.method to POST, PUT, DELETE or UPDATE.
+		// - waiting maximum 15 seconds for a request
 		priv = {
 			'ajax' : {
 				'interval_requests' : 3000,
+				'max_time_waiting'  : 15,
 				'method' : 'GET'
 			}
 		},
@@ -49,7 +51,7 @@
 			recursive : function (callback) {
 				
 				
-				if (priv.ajax.interval_requests/1000 <= 15) {
+				if (priv.ajax.interval_requests/1000 <= priv.ajax.max_time_waiting) {
 					console.warn('waiting '+priv.ajax.interval_requests+' seconds...');
 					recursive_cron = 
 						setInterval(function() {
